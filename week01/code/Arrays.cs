@@ -1,3 +1,7 @@
+using System.Dynamic;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
+
 public static class Arrays
 {
     /// <summary>
@@ -8,12 +12,19 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Create an array of size 'length' to store the results.
+        // Use a loop that runs from 1 to 'length'.
+        // Start with factor 1, we don't want to multiply by 0. 
+        // In each iteration, multiply the given number by the current loop index(this is the factor)
+        // Store the result of the multiplication in the array; the index should be (factor - 1)
+        // Return the array after the loop is done.
 
-        return []; // replace this return statement with your own
+        var results = new double[length];
+        for (var factor = 1; factor <= length; ++factor) {
+            results[factor-1] = number * factor;
+        }
+
+        return results;
     }
 
     /// <summary>
@@ -25,9 +36,19 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // The function needs to receive a list and an amount.
+        // Create a new empty list.
+        // Create a variable to store the divisor of the list — we take data.Count minus the amount.
+        // Insert at the beginning of the new list a first range taken from the data.
+        // The first range will have the index as the divisor and the count as the amount.
+        // Insert at the end of the new list a second range taken from the data.
+        // The second range will have the index as 0 (beginning) and the count as the divisor.
+        // Return the new list.
+        List<int> result = new List<int>();
+
+        int divisor = data.Count - amount;
+        result.InsertRange(0, data.GetRange(divisor, amount));
+        result.InsertRange(result.Count, data.GetRange(0, divisor));
+
     }
 }
