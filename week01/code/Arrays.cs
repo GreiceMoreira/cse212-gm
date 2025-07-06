@@ -20,8 +20,9 @@ public static class Arrays
         // Return the array after the loop is done.
 
         var results = new double[length];
-        for (var factor = 1; factor <= length; ++factor) {
-            results[factor-1] = number * factor;
+        for (var factor = 1; factor <= length; ++factor)
+        {
+            results[factor - 1] = number * factor;
         }
 
         return results;
@@ -49,6 +50,9 @@ public static class Arrays
         int divisor = data.Count - amount;
         result.InsertRange(0, data.GetRange(divisor, amount));
         result.InsertRange(result.Count, data.GetRange(0, divisor));
+
+        data.Clear();
+        data.AddRange(result);
 
     }
 }
