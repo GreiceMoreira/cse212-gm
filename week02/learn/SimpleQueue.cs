@@ -11,7 +11,7 @@
         var value = queue.Dequeue();
         Console.WriteLine(value);
         // Defect(s) Found:
-
+        //The index of the first element is 0 not 1;
         Console.WriteLine("------------");
 
         // Test 2
@@ -29,7 +29,7 @@
         value = queue.Dequeue();
         Console.WriteLine(value);
         // Defect(s) Found: 
-
+        // Enqueue used to add items at the start of the list (index 0), which reversed the order.
         Console.WriteLine("------------");
 
         // Test 3
@@ -54,7 +54,7 @@
     /// </summary>
     /// <param name="value">Integer value to add to the queue</param>
     private void Enqueue(int value) {
-        _queue.Insert(0, value);
+        _queue.Add(value);
     }
 
     /// <summary>
@@ -66,8 +66,8 @@
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        var value = _queue[0];
+        _queue.RemoveAt(0);
         return value;
     }
 }
