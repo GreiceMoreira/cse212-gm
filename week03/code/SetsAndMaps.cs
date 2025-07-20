@@ -19,10 +19,29 @@ public static class SetsAndMaps
     /// that there were no duplicates) and therefore should not be returned.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
+    
+    // if words was: [am, at, ma, if, fi]
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var biLetter = new HashSet<string>(words);
+        List<string> pairs = new();
+
+        foreach(string word in biLetter.ToList()){
+            char letter1 = word[0];
+            char letter2 = word[1];      
+            string word2 = $"{letter2}{letter1}";  
+            
+            
+            if (letter1 != letter2 && biLetter.Contains(word2)){
+                pairs.Add($"{word} & {word2}");
+    
+                biLetter.Remove(word);
+                biLetter.Remove(word2);
+            }
+            }
+
+            return pairs.ToArray();
     }
 
     /// <summary>
@@ -36,15 +55,25 @@ public static class SetsAndMaps
     /// </summary>
     /// <param name="filename">The name of the file to read</param>
     /// <returns>fixed array of divisors</returns>
+   
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
-        var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename))
+
+        var degrees = new Dictionary<string, int>(); 
+        foreach (var line in File.ReadLines(filename)) 
         {
+            
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
-        }
+            string degree = fields[3];
+            if (!degrees.ContainsKey(degree)){
+                degrees[degree] = 1;
+            }
+            else {
+                degrees[degree] = degrees[degree] + 1;
+            }
 
+        }
         return degrees;
     }
 
@@ -66,8 +95,40 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
+   
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.Replace(" ", "").ToUpper();
+        word2 = word2.Replace(" ", "").ToUpper();
+        if (word1.Length != word2.Length){
+             return false;
+        }
+       
+        Dictionary<char,int> _word1 = new();
+        Dictionary<char,int> _word2 = new();
+
+        foreach (char letter1 in word1) {
+            if (!_word1.ContainsKey(letter1)){
+            _word1[letter1] = 1;
+            }else{
+                _word1[letter1]++;
+            }
+        }
+  
+        foreach (char letter2 in word2) {
+            if (!_word2.ContainsKey(letter2)){
+            _word2[letter2] = 1;
+            }else{
+                _word2[letter2]++;
+            }
+        }
+
+        foreach(var k in _word1){
+             if (!_word2.ContainsKey(k.Key) || _word1[k.Key] != _word2[k.Key]){
+              return false;  
+            }
+        }
+        return true;
+        
     }
 
     /// <summary>
@@ -99,8 +160,29 @@ public static class SetsAndMaps
         // TODO Problem 5:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
+        
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
-        // 3. Return an array of these string descriptions.
-        return [];
+        Dictionary<string, string> _earthquakeDailyDic = new();
+
+        foreach (var feature in featureCollection.Features)
+        {
+            var place = feature.Properties.Place;
+            var mag = feature.Properties.Mag.ToString();
+
+            if (!_earthquakeDailyDic.ContainsKey(place))
+            {
+                _earthquakeDailyDic[place] = mag;
+            }
+            else
+            {
+                _earthquakeDailyDic[place] += $", {mag}";
+            }
+        }
+        // Retorna um array formatado
+        var toArray = _earthquakeDailyDic
+            .Select(kv => $"{kv.Key} - Mag {kv.Value}")
+            .ToArray();
+        return toArray;
+            // 3. Return an array of these string descriptions.
     }
 }

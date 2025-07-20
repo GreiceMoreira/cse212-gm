@@ -20,12 +20,35 @@ public class Maze
     private int _currX = 1;
     private int _currY = 1;
 
+
     public Maze(Dictionary<ValueTuple<int, int>, bool[]> mazeMap)
     {
         _mazeMap = mazeMap;
     }
 
     // TODO Problem 4 - ADD YOUR CODE HERE
+    private void Move(int directionIndex, int moveX, int moveY)
+    { 
+        var is_Key = (_currX , _currY);
+        if (!_mazeMap.ContainsKey(is_Key)){
+            throw new InvalidOperationException("Invalid Location");
+        }
+
+        bool[] directions = _mazeMap[(_currX, _currY)];
+
+        if (directions[directionIndex])
+        {
+            _currX += moveX;
+            _currY += moveY;
+            Console.WriteLine(string.Join(", ", directions));
+            Console.WriteLine($"x{_currX} y{_currY}");
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+    }
+
     /// <summary>
     /// Check to see if you can move left.  If you can, then move.  If you
     /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
@@ -33,6 +56,7 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        Move(0, -1, 0);
     }
 
     /// <summary>
@@ -42,6 +66,7 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        Move(1,+1,0);
     }
 
     /// <summary>
@@ -51,6 +76,8 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        Move(2,0,-1);
+
     }
 
     /// <summary>
@@ -60,6 +87,8 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        Move(3,0,+1);
+
     }
 
     public string GetStatus()
