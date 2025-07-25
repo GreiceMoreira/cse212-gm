@@ -199,6 +199,7 @@ public class ReplaceTests
         ll.Replace(3, -1);
         Assert.AreEqual("<LinkedList>{5, 4, 4, -1, 4, 4}", ll.ToString());
     }
+
 }
 
 [TestClass]
