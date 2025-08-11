@@ -1,3 +1,7 @@
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json.Bson;
+
 public static class Trees
 {
     /// <summary>
@@ -46,8 +50,20 @@ public static class Trees
     /// <param name="first">the first index in the sortedNumbers to insert</param>
     /// <param name="last">the last index in the sortedNumbers to insert</param>
     /// <param name="bst">the BinarySearchTree in which to insert the values</param>
+
+
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst)
     {
         // TODO Start Problem 5
+        int middle = (first + last) / 2;
+        int value = sortedNumbers[middle];
+
+
+        InsertMiddle(sortedNumbers, 0, sortedNumbers.Length - 1, bst);
+
+
+
+
+
     }
 }
